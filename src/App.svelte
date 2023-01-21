@@ -1,30 +1,150 @@
 <script>
-	export let name;
+	import Header from "./Header.svelte";
+	import PizzaCart from "./PizzaCart.svelte";
+
+	let arrayPizza = [
+		{
+			image: "/img/pizza/image2.jpg",
+			name: "Pizza2",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "30 cm",
+					value: 30,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image3.jpg",
+			name: "Pizza3",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image4.jpg",
+			name: "Pizza4",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "30 cm",
+					value: 30,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image5.jpg",
+			name: "Pizza5",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "30 cm",
+					value: 30,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image6.jpg",
+			name: "Pizza6",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "30 cm",
+					value: 30,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image7.jpg",
+			name: "Pizza7",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "30 cm",
+					value: 30,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image8.jpg",
+			name: "Pizza8",
+			price: 350,
+			size: [
+				{
+					name: "20 cm",
+					value: 20,
+				},
+				{
+					name: "30 cm",
+					value: 30,
+				},
+				{
+					name: "40 cm",
+					value: 40,
+				},
+			],
+		},
+		{
+			image: "/img/pizza/image9.jpg",
+			name: "Pizza9",
+			price: 350,
+		},
+	];
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+<Header />
+<section id="menu">
+	<div class="container">
+		{#each arrayPizza as pizza}
+			<PizzaCart {...pizza} />
+		{/each}
+	</div>
+</section>
