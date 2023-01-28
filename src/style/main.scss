@@ -1,6 +1,7 @@
 $variable: #7B7B7B;
 $light-gray: #F3F3F3;
 $orange: #FE5F1E;
+$black: #282828;
 
 * {
    margin: 0;
@@ -132,9 +133,76 @@ header {
    }
 }
 
+.filter-list {
+   label {
+      margin-right: 10px;
+
+      input {
+         display: none;
+
+         &:checked+span {
+            background-color: $black;
+            color: white;
+         }
+      }
+   }
+}
+
+.sorter-list {
+
+   position: relative;
+
+   .selected {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $black;
+
+      span.name {
+         margin-left: 5px;
+         font-weight: 400;
+         color: $orange;
+         text-decoration: underline dashed;
+         cursor: pointer;
+      }
+   }
+
+   .list {
+      position: absolute;
+      right: 0;
+      top: 100%;
+
+      background-color: white;
+      padding: 18px 0;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+      border-radius: 10px;
+
+      ul {
+         li {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: $black;
+            padding: 10px 14px;
+            cursor: pointer;
+
+            &:hover,
+            &.active {
+               background-color: #FE5F1E0D;
+               color: $orange;
+            }
+         }
+      }
+   }
+}
+
 section#menu {
    .container {
       flex-wrap: wrap;
+
+      &.filter {
+         padding: 30px 0;
+         justify-content: space-between;
+      }
    }
 
    .pizza-cart {

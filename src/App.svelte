@@ -1,149 +1,89 @@
 <script>
+	import axios from "axios";
+
+	import FiltrationList from "./FiltrationList.svelte";
+	import SorterList from "./SorterList.svelte";
 	import Header from "./Header.svelte";
 	import PizzaCart from "./PizzaCart.svelte";
+	import { onMount } from "svelte";
 
-	let arrayPizza = [
+	let url = "http://localhost:3000/pizzas";
+
+	let arrayPizza = [];
+
+	let arrayFilter = [
 		{
-			image: "/img/pizza/image2.jpg",
-			name: "Pizza2",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "30 cm",
-					value: 30,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
+			name: "Всі",
+			value: "",
 		},
 		{
-			image: "/img/pizza/image3.jpg",
-			name: "Pizza3",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
+			name: "М'ясні",
+			value: 0,
 		},
 		{
-			image: "/img/pizza/image4.jpg",
-			name: "Pizza4",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "30 cm",
-					value: 30,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
+			name: "Вегетеріанські",
+			value: 1,
 		},
 		{
-			image: "/img/pizza/image5.jpg",
-			name: "Pizza5",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "30 cm",
-					value: 30,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
+			name: "Гриль",
+			value: 2,
 		},
 		{
-			image: "/img/pizza/image6.jpg",
-			name: "Pizza6",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "30 cm",
-					value: 30,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
+			name: "Гострі",
+			value: 3,
 		},
 		{
-			image: "/img/pizza/image7.jpg",
-			name: "Pizza7",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "30 cm",
-					value: 30,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
-		},
-		{
-			image: "/img/pizza/image8.jpg",
-			name: "Pizza8",
-			price: 350,
-			size: [
-				{
-					name: "20 cm",
-					value: 20,
-				},
-				{
-					name: "30 cm",
-					value: 30,
-				},
-				{
-					name: "40 cm",
-					value: 40,
-				},
-			],
-		},
-		{
-			image: "/img/pizza/image9.jpg",
-			name: "Pizza9",
-			price: 350,
+			name: "Закриті",
+			value: 4,
 		},
 	];
+	let selectFilter = arrayFilter[0].value;
+
+	let selectSort = 0;
+
+	$: updatePizzas(selectFilter, selectSort);
+
+	function updatePizzas(filter, sort) {
+		let newUrl = url;
+		if (selectFilter !== "") {
+			newUrl += "?category=" + filter;
+		}
+
+		let partl = "&";
+		if (selectFilter == "") {
+			partl = "?";
+		}
+		switch (selectSort) {
+			case 0:
+				newUrl += partl + "_sort=rating&_order=desc";
+				break;
+		}
+
+		axios({
+			method: "get",
+			url: newUrl,
+		})
+			.then((response) => {
+				arrayPizza = response.data;
+			})
+			.catch((e) => {
+				console.warn(e);
+			});
+	}
+
+	function getSorter(e) {
+		selectSort = e.detail.value;
+	}
 </script>
 
 <Header />
 <section id="menu">
+	<div class="container filter">
+		<FiltrationList arrayList={arrayFilter} bind:selectFilter />
+		<SorterList on:select={getSorter} />
+	</div>
 	<div class="container">
-		{#each arrayPizza as pizza}
+		{#each arrayPizza as pizza (pizza.id)}
 			<PizzaCart {...pizza} />
 		{/each}
 	</div>
