@@ -1,6 +1,7 @@
 <script>
    import { createEventDispatcher } from "svelte";
    import { fade } from "svelte/transition";
+   import { clickOutside } from "./directive/clickOutside.js";
 
    let dispatcher = createEventDispatcher();
 
@@ -25,7 +26,13 @@
    }
 </script>
 
-<div class="sorter-list">
+<div
+   class="sorter-list"
+   use:clickOutside
+   on:click-outside={() => {
+      openList = false;
+   }}
+>
    <div class="selected">
       сортувати за:
       <span
